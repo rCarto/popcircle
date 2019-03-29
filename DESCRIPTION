@@ -1,0 +1,12 @@
+Package: popcircle
+Type: Package
+Title: Create a Nice Layout of Shapes
+Authors@R: person("Timothée", "Giraud",email = "timothee.giraud@cnrs.fr", role = c("cre","aut"))
+Version: 0.1.0
+Description: Use four spaces when indenting paragraphs within the Description.
+License: GPL-3
+Imports: sf, packcircles
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Suggests: testthat, covr
