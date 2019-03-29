@@ -1,10 +1,9 @@
-#' @title Ronde
+#' @title Proportional Circles and Shapes
 #' @name popcircle
-#' @description Plot a choropleth layer.
-#' @param x an sf object, a simple feature collection. If x is used then spdf, df, spdfid and dfid are not.
-#' @param var a var
-#' @details
-#' The optimum number of class depends on the number of geographical objects.
+#' @description Get proportional circles and polygons on a compact layout.
+#' @param x an sf POLYGON or MULTIPOLYGON object
+#' @param var name of the numeric field in x to get proportionalities.
+#' @return A list of length 2 of circles and shapes sf objects.
 #' @export
 #' @import packcircles
 #' @import sf
@@ -12,14 +11,21 @@
 #' library(sf)
 #' library(popcircle)
 #' mtq <- st_read(system.file("gpkg/mtq.gpkg", package="popcircle"))
-#' vv <-popcircle(mtq, "POP")
+#' res <- popcircle(x = mtq, var = "POP")
+#' circles <- res$circles
+#' shapes <- res$shapes
 #' par(mar = c(0,0,0,0))
-#' plot(st_geometry(vv$circles), col = "darkseagreen", border = "darkseagreen1")
-#' plot(st_geometry(vv$pop), col = "red", add = TRUE, lwd = 1, border = "red4")
+#' plot(st_geometry(circles), col = "darkseagreen", border = "darkseagreen1")
+#' plot(st_geometry(shapes), col = "red", add = TRUE, lwd = 1, border = "red4")
+#' if(require(cartography)){
+#'   labelLayer(x = circles[1:10,], txt = "LIBGEO", halo = TRUE, overlap = FALSE)
+#' }
 popcircle <- function(x, var){
+  # prep data
   x <- x[!is.na(x[[var]]), ]
   x <- x[x[[var]] > 0, ]
   x <- x[order(x[[var]], decreasing = T), ]
+  # get layout
   res <- circleProgressiveLayout(x[[var]], sizetype = "area")
   # sf object creation
   . <- sf::st_buffer(sf::st_as_sf(res, coords =c('x', 'y'),
@@ -28,8 +34,8 @@ popcircle <- function(x, var){
   xc <- x
   sf::st_geometry(xc) <- sf::st_geometry(.)
   xc$radius <- .$radius
+  # move and resize shapes
   l <- vector("list", nrow(x))
-
   for(i in 1:nrow(x)){
     circ <- xc[i,]
     shp <- x[i,]
@@ -53,11 +59,10 @@ popcircle <- function(x, var){
     l[[i]] <- move_and_resize(x = shp, xy = c(xcoo,ycoo), k = k)
   }
   cpop <- do.call(rbind, l)
-  return(list(circles=xc, pop = cpop))
-
+  # clean
+  xc <- xc[, -ncol(xc)]
+  return(list(circles = xc, shapes = cpop))
 }
-
-
 
 move_and_resize <- function(x, xy, k = 1){
   cntrd <- st_centroid(st_combine(x))

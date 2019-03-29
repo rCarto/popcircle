@@ -2,27 +2,32 @@
 % Please edit documentation in R/main.R
 \name{popcircle}
 \alias{popcircle}
-\title{Ronde}
+\title{Proportional Circles and Shapes}
 \usage{
 popcircle(x, var)
 }
 \arguments{
-\item{x}{an sf object, a simple feature collection. If x is used then spdf, df, spdfid and dfid are not.}
+\item{x}{an sf POLYGON or MULTIPOLYGON object}
 
-\item{var}{a var}
+\item{var}{name of the numeric field in x to get proportionalities.}
+}
+\value{
+A list of length 2 of circles and shapes sf objects.
 }
 \description{
-Plot a choropleth layer.
-}
-\details{
-The optimum number of class depends on the number of geographical objects.
+Get proportional circles and polygons on a compact layout.
 }
 \examples{
 library(sf)
 library(popcircle)
 mtq <- st_read(system.file("gpkg/mtq.gpkg", package="popcircle"))
-vv <-popcircle(mtq, "POP")
+res <- popcircle(x = mtq, var = "POP")
+circles <- res$circles
+shapes <- res$shapes
 par(mar = c(0,0,0,0))
-plot(st_geometry(vv$circles), col = "darkseagreen", border = "darkseagreen1")
-plot(st_geometry(vv$pop), col = "red", add = TRUE, lwd = 1, border = "red4")
+plot(st_geometry(circles), col = "darkseagreen", border = "darkseagreen1")
+plot(st_geometry(shapes), col = "red", add = TRUE, lwd = 1, border = "red4")
+if(require(cartography)){
+  labelLayer(x = circles[1:10,], txt = "LIBGEO", halo = TRUE, overlap = FALSE)
+}
 }
