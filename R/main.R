@@ -1,11 +1,12 @@
 #' @title Proportional Circles and Shapes
 #' @name popcircle
-#' @description Get proportional circles and polygons on a compact layout.
+#' @description Get proportional circles and with polygons indide using a compact layout.
 #' @param x an sf POLYGON or MULTIPOLYGON object
 #' @param var name of the numeric field in x to get proportionalities.
 #' @return A list of length 2 of circles and shapes sf objects.
+#' @details Polygons are not proportional, they are rescaled to fit the circles.
 #' @export
-#' @import packcircles
+#' @importFrom packcircles circleProgressiveLayout
 #' @import sf
 #' @examples
 #' library(sf)
@@ -34,6 +35,8 @@ popcircle <- function(x, var){
   xc <- x
   sf::st_geometry(xc) <- sf::st_geometry(.)
   xc$radius <- .$radius
+
+
   # move and resize shapes
   l <- vector("list", nrow(x))
   for(i in 1:nrow(x)){
@@ -70,48 +73,3 @@ move_and_resize <- function(x, xy, k = 1){
   st_geometry(x) <- xg + xy - st_bbox(xg)[1:2]
   return(x)
 }
-
-
-# library(sf)
-# library(cartography)
-# library(popcircle)
-#
-# par(mar = c(0,0,0,0), mfrow = c(2,2))
-#
-#
-# mtq <- st_read(system.file("gpkg/mtq.gpkg", package="popcircle"))
-# vv <- popcircle(mtq, "POP")
-# plot(st_geometry(vv$circles), col = "darkseagreen", border = "darkseagreen1")
-# plot(st_geometry(vv$pop), col = "red", add=T, lwd = 1, border= "red4")
-# vv$circles$txt <- paste0(vv$circles$LIBGEO, "\n", round(vv$pop$POP,0), " habs")
-# labelLayer(x = vv$circles[1:10,], txt = "txt", halo = T, r = 0.12, overlap = F)
-#
-#
-#
-#
-# com <- st_read("/home/tim/Documents/prz/NewRep/com46.shp")
-# vv <- popcircle(com, "TOT")
-# plot(st_geometry(vv$circles), col = "darkseagreen", border = "darkseagreen1")
-# plot(st_geometry(vv$pop), col = "red", add=T, lwd = 1, border= "red4")
-# vv$circles$txt <- paste0(vv$circles$NOM_COM, "\n", round(vv$pop$TOT,0), " habs")
-# labelLayer(x = vv$circles[1:10,], txt = "txt", halo = T, r = 0.15, overlap = F)
-#
-#
-# com31 <- readRDS("/home/tim/Documents/prz/satRday/exercises/data/com_31.rds")
-# vv <- popcircle(com31, "P14_POP")
-# plot(st_geometry(vv$circles), col = "darkseagreen", border = "darkseagreen1")
-# plot(st_geometry(vv$pop), col = "red", add=T, lwd = 1, border= "red4")
-# vv$circles$txt <- paste0(vv$circles$INSEE_COM)
-# labelLayer(x = vv$circles[1:10,], txt = "txt", halo = T, r = 0.15, overlap = F)
-#
-#
-# data("nuts2006")
-# nuts0.spdf@data <- nuts0.df
-# n0 <- st_as_sf(nuts0.spdf)
-# vv <- popcircle(n0, "pop2008")
-# plot(st_geometry(vv$circles), col = "darkseagreen", border = "darkseagreen1")
-# plot(st_geometry(vv$pop), col = "red", add=T, lwd = 1, border= "red4")
-# vv$circles$txt <- paste0(vv$circles$id, "\n", round(vv$pop$pop2008/1000000,0), " Mio habs")
-# labelLayer(x = vv$circles[1:10,], txt = "txt", halo = T, r = 0.15, overlap = F)
-
-

@@ -4,9 +4,11 @@
 [![Build Status](https://travis-ci.org/rCarto/popcircle.svg?branch=master)](https://travis-ci.org/rCarto/popcircle)
 [![codecov](https://codecov.io/gh/rCarto/popcircle/branch/master/graph/badge.svg)](https://codecov.io/gh/rCarto/popcircle)
 
-![](https://raw.githubusercontent.com/rCarto/popcircle/master/img/front.png)
+![](https://raw.githubusercontent.com/rCarto/popcircle/master/img/pop.png)
 
-This one-function package computes polygons with areas scaled to a variable and displays them using a compact layout (big values in the center, small values at the periphery).
+This one-function package computes circles with areas scaled to a variable and displays them using a compact layout (higher values in the center, lower values at the periphery). Original polygons are scaled to fit inside these circles (size are roughly proportional, not strictly). 
+
+![](https://raw.githubusercontent.com/rCarto/popcircle/master/img/co2.png)
 
 ## Example
 

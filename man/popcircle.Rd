@@ -15,7 +15,10 @@ popcircle(x, var)
 A list of length 2 of circles and shapes sf objects.
 }
 \description{
-Get proportional circles and polygons on a compact layout.
+Get proportional circles and with polygons indide using a compact layout.
+}
+\details{
+Polygons are not proportional, they are rescaled to fit the circles.
 }
 \examples{
 library(sf)
