@@ -45,9 +45,9 @@ plot(st_geometry(shapes_pop), col = "#ed6a5a95", border = "#ed6a5a",
      add = TRUE, lwd = .3)
 # labels
 circles_pop$lab <- paste0(circles_pop$country, '\n',
-                      round(circles_pop$value/1000000))
+                          round(circles_pop$value/1000000))
 labelLayer(x = circles_pop[1:36,], txt = "lab", halo = TRUE, overlap = FALSE,
-           pos = 3, cex = .7, col = "#5d576b", r=.15)
+           pos = 3, cex = seq(1,0.4, length.out = 36), col = "#5d576b", r=.15)
 # title
 bb <- st_bbox(circles_pop)
 text(x = bb[1], bb[4], labels = "Population", adj=c(0,1),
@@ -55,7 +55,7 @@ text(x = bb[1], bb[4], labels = "Population", adj=c(0,1),
 text(x = bb[3], bb[4], labels = "Million Inhabitants", adj=c(1,1),
      col = "grey50", cex = 1.2, font = 3)
 mtext(text = "T. Giraud, 2019 - World Development Indicators, 2017 ",
-      side = 1, line = -1, adj = 1, cex = .8, font = 3)
+      side = 1, line = -1, adj = 1, cex = .8, font = 3, col = "grey50")
 dev.off()
 
 
@@ -71,7 +71,7 @@ plot(st_geometry(shapes_co2), col = "#88292f95", border = "#88292f",
 circles_co2$lab <- paste0(circles_co2$country, '\n',
                           round(circles_co2$value/1000))
 labelLayer(x = circles_co2[1:36,], txt = "lab", halo = TRUE, overlap = FALSE,
-           pos = 3, cex = .7, col = "#2e1e0f", r=.15, show.lines = FALSE)
+           pos = 3, cex = seq(.9,0.5, length.out = 36), col = "#2e1e0f", r=.15, show.lines = FALSE)
 # title
 bb <- st_bbox(circles_co2)
 text(bb[1], bb[4], labels = "CO2 Emissions", adj=c(0,1),
@@ -80,5 +80,31 @@ text(x = bb[3], bb[4], labels = "Million Tons", adj=c(1,1),
      col = "white", cex = 1.2, font = 3)
 # sources
 mtext(text = "T. Giraud, 2019 - World Development Indicators, 2014 ",
-      side = 1, line = -1, adj = 1, cex = .8, font = 3)
+      side = 1, line = -1, adj = 1, cex = .8, font = 3, col = "white")
+dev.off()
+
+
+
+
+# Create the figure
+png("img/smallpop.png", width = 600, height = 550, res = 100, pointsize = 8)
+par(mar = c(0,0,0,0))
+## POPULATION
+# display circles and polygons
+plot(st_geometry(circles_pop), bg = "#e6ebe0",col = "#9bc1bc", border = "white")
+plot(st_geometry(shapes_pop), col = "#ed6a5a95", border = "#ed6a5a",
+     add = TRUE, lwd = .3)
+# labels
+circles_pop$lab <- paste0(circles_pop$country, '\n',
+                          round(circles_pop$value/1000000))
+labelLayer(x = circles_pop[1:36,], txt = "lab", halo = TRUE, overlap = FALSE,
+           pos = 3, cex = seq(1,0.4, length.out = 36), col = "#5d576b", r=.15)
+# title
+bb <- st_bbox(circles_pop)
+text(x = bb[1], bb[4], labels = "Population", adj=c(0,1),
+     col = "grey50", cex = 2)
+text(x = bb[3], bb[4], labels = "Million Inhabitants", adj=c(1,1),
+     col = "grey50", cex = 1.2, font = 3)
+mtext(text = "T. Giraud, 2019 - World Development Indicators, 2017 ",
+      side = 1, line = -1, adj = 1, cex = .8, font = 3, col = "grey50")
 dev.off()
