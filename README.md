@@ -17,7 +17,7 @@ See [this gist](https://gist.github.com/rCarto/34c7599d7d89a379db02c663c2e333ee)
 
 ### Interactive Visualisation
 
-[Here](https://rcarto.github.io/popcircle/interpopcircle.html) is an example of interactive visualisation using `leaflet`. 
+[Here](https://rcarto.github.io/popcircle/index.html) is an example of interactive visualisation using `leaflet`. 
 
 ![](https://raw.githubusercontent.com/rCarto/popcircle/master/img/inter.gif)
 
