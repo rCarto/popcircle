@@ -15,7 +15,14 @@ This one-function package computes circles with areas scaled to a variable and d
 See [this gist](https://gist.github.com/rCarto/34c7599d7d89a379db02c663c2e333ee) for the code used to produce figures on countries population and CO2 emissions.  
 
 
+### Interactive Visualisation
 
+[Here](https://rcarto.github.io/popcircle/interpopcircle.html) is an example of interactive visualisation using `leaflet`. 
+
+![](https://raw.githubusercontent.com/rCarto/popcircle/master/img/inter.gif)
+
+
+### Typical example
 
 ``` r
 library(sf)
