@@ -64,6 +64,7 @@ popcircle <- function(x, var){
   cpop <- do.call(rbind, l)
   # clean
   xc <- xc[, -ncol(xc)]
+  st_crs(cpop) <- st_crs(xc)
   return(list(circles = xc, shapes = cpop))
 }
 
