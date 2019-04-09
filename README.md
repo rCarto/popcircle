@@ -10,6 +10,12 @@ This one-function package computes circles with areas scaled to a variable and d
 
 ![](https://raw.githubusercontent.com/rCarto/popcircle/master/img/co2.png)
 
+## Install
+``` r
+library(remotes)
+install_github("rCarto/popcircle")
+```
+
 ## Example
 
 See [this gist](https://gist.github.com/rCarto/34c7599d7d89a379db02c663c2e333ee) for the code used to produce figures on countries population and CO2 emissions.  
